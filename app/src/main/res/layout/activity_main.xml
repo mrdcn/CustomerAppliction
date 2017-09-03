@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    android:orientation="horizontal">
+
+    <com.another.customapplication.view.ColorBorderTextView
+
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="defualt"
+        android:textSize="18sp"
+        app:bordercolor="#ffff0000"
+        app:borderwidth="2dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:id="@+id/text_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <com.another.customapplication.view.ColorBorderTextView
+            android:id="@+id/tv_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:text="黑色"
+            android:textColor="#ff000000"
+            android:textSize="15sp"
+            app:bordercolor="#ff000000"
+            app:borderwidth="1dp" />
+
+        <com.another.customapplication.view.ColorBorderTextView
+            android:id="@+id/tv_white"
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:text="白色"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            app:bordercolor="#ffffff"
+            app:borderwidth="1dp" />
+
+        <com.another.customapplication.view.ColorBorderTextView
+            android:id="@+id/tv_blue"
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:text="蓝色"
+            android:textColor="#ff045df4"
+            android:textSize="15sp"
+            app:bordercolor="#ff045df4"
+            app:borderwidth="1dp" />
+    </LinearLayout>
+
+</RelativeLayout>
