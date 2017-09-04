@@ -4,13 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -20,7 +14,7 @@ import com.another.customapplication.R;
  * Created by another on 17-3-24.
  */
 
-public class ColorBorderTextView extends android.support.v7.widget.AppCompatTextView {
+public class ColorBorderTextView extends TextView {
 
     private int borderColor = Color.BLACK;
     private int defualtTextSize = 15;

@@ -41,28 +41,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         black.setOnClickListener(this);
         blue.setOnClickListener(this);
         white.setOnClickListener(this);
-        java_8test();
     }
 
-    void java_8test(){
-    }
     @Override
     public void onClick(View v) {
-//        switch (v.getId()){
-//            case R.id.tv_black:
-//                break;
-//            case R.id.tv_white:
-//                break;
-//            case R.id.tv_blue:
-//                break;
-//        }
         if( v instanceof  ColorBorderTextView){
             ColorBorderTextView view = (ColorBorderTextView)v;
-
         }
     }
 
-    private void addColorTextView(ColorBorderTextView view){
-
-    }
 }
