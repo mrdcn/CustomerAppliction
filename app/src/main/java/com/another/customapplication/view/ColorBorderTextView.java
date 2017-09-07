@@ -90,7 +90,6 @@ public class ColorBorderTextView extends TextView {
 //            canvas.drawArc(new RectF(0,getHeight() - borderRadio *2,borderRadio *2,getHeight()),90,90,false,paint);
             gradientDrawable.draw(canvas);
             setBackgroundDrawable(gradientDrawable);
-            canvas.restore();
         }
     }
 
