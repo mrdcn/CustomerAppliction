@@ -36,12 +36,7 @@ public class MainActivity extends Activity  {
     private ColorBorderTextView white;
     private ColorBorderTextView blue;
     private LinearLayout tvContainer;
-    IntentFilter tagDetected;
-    IntentFilter tagDetected1;
-    IntentFilter tagDetected2;
-    IntentFilter tagDetected3;
-    PendingIntent pi;
-    NfcAdapter nfcAdapter;
+
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -52,14 +47,7 @@ public class MainActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        pi = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        tagDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-        tagDetected.addAction(NfcAdapter.ACTION_TAG_DISCOVERED);
-        tagDetected.addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        tagDetected.addAction(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED);
-
-
+        getSystemService(ACTIVITY_SERVICE);
 
     }
 
@@ -173,13 +161,11 @@ public class MainActivity extends Activity  {
     @Override
     protected void onResume() {
         super.onResume();
-        nfcAdapter.enableForegroundDispatch(this, pi,
-                new IntentFilter[] { tagDetected }, null);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        nfcAdapter.disableForegroundDispatch(this);
     }
 }

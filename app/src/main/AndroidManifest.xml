@@ -28,6 +28,14 @@
             </intent-filter>
 
         </activity>
+        <service
+            android:name=".TestService"
+            android:exported="true"
+        >
+            <intent-filter >
+                <action android:name="hehe" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
