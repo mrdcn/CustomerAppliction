@@ -31,11 +31,7 @@ import java.io.IOException;
  */
 
 public class MainActivity extends Activity  {
-    private ColorBorderTextView tv;
-    private ColorBorderTextView black;
-    private ColorBorderTextView white;
-    private ColorBorderTextView blue;
-    private LinearLayout tvContainer;
+
 
     Handler handler = new Handler(){
         @Override
@@ -43,13 +39,6 @@ public class MainActivity extends Activity  {
             super.handleMessage(msg);
         }
     };
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        getSystemService(ACTIVITY_SERVICE);
-
-    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -159,13 +148,70 @@ public class MainActivity extends Activity  {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        View tv = findViewById(R.id.tv_black);
+
+        if(tv!= null){
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this,BActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        log("onCreate");
 
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        log("onStart");
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        log("onResume");
+
+
+    }
+    @Override
     protected void onPause() {
         super.onPause();
+        log("onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        log("onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        log("onDestory");
+
+    }
+
+
+
+
+
+
+     protected  String discriptor = "-----A";
+
+    void log(String logMsg){
+        Log.e("activity-lifecicle",logMsg+getDiscriptor());
+    }
+
+    String getDiscriptor(){
+        return discriptor;
     }
 }
