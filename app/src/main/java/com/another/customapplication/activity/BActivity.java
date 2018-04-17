@@ -12,8 +12,11 @@ import org.reactivestreams.Subscription;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class BActivity extends MainActivity {
@@ -65,12 +68,50 @@ public class BActivity extends MainActivity {
             }
         });
 
-        observable.subscribeOn(Schedulers.io()).subscribe(new Consumer<String>() {
+
+
+        Observer<String> observer  = new Observer<String>() {
             @Override
-            public void accept(String s) throws Exception {
+            public void onSubscribe(Disposable d) {
+                //  SubscribeOnObserver  implements Disposable
+                Log.e("Rx--> OnSubscr", d.toString());
+            }
+
+            @Override
+            public void onNext(String s) {
                 Log.e("rxjava_scheduler_" + System.currentTimeMillis(),Thread.currentThread().getName() + "\t" + s);
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public String toString() {
+                return getClass().getSimpleName() + " -- > CustomObserver";
+            }
+        };
+        observable.map(new Function<String, Integer>() {
+            @Override
+            public Integer apply(String s) throws Exception {
+                return 0;
+            }
+        })
+
+       .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+
             }
         });
+
 
     }
 
