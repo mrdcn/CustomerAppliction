@@ -30,5 +30,8 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.1.2"
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    releaseImplementation files('libs/android.jar')
+//    implementation('libs/java-client-4.1.2.jar')
+    implementation ('org.seleniumhq.selenium:selenium-server-standalone:2.53.0'){
+        exclude  group:'org.openqa.selenium'
+    }
 }

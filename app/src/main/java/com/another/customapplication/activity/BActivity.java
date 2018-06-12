@@ -1,17 +1,25 @@
 package com.another.customapplication.activity;
 
+import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Trace;
 import android.util.Log;
+import android.view.View;
 
 import com.another.customapplication.R;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -19,19 +27,70 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class BActivity extends MainActivity {
-
+public class BActivity<T> extends MainActivity {
+    String ssid;
+    ArrayList<Disposable> mDisposables = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         discriptor = "-----B";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_b);
+
+
+        findViewById(R.id.bac).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WifiManager manager = (WifiManager) getSystemService(WIFI_SERVICE);
+
+                ssid = manager.getConnectionInfo().getSSID();
+
+                Log.e("bac",ssid);
+            }
+        });
+
         test();
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        for(Disposable disposable : mDisposables){
+            disposable.dispose();
+        }
+    }
+
+    public static <T> ObservableTransformer<T,T> io_main(){
+        return new ObservableTransformer<T, T>() {
+            @Override
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return  upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            }
+        };
+    }
+
+    Disposable timer(){
+        return Observable.timer(3, TimeUnit.SECONDS).compose(io_main()).subscribe(new Consumer<Long>() {
+            @Override
+            public void accept(Long aLong) throws Exception {
+                Thread.sleep(2);
+                Log.e("next timer","  ");
+            }
+    });
+    }
+
     public void test(){
+
+        Disposable intervalDisposable = Observable.interval(5,TimeUnit.SECONDS).compose(io_main()).subscribe(new Consumer<Long>() {
+            @Override
+            public void accept(Long aLong) throws Exception {
+                mDisposables.add(timer());
+            }
+        });
+
+        mDisposables.add(intervalDisposable);
+
         Subscriber<String> subscriber = new Subscriber<String>() {
             @Override
             public void onSubscribe(Subscription s) {
@@ -79,6 +138,9 @@ public class BActivity extends MainActivity {
 
             @Override
             public void onNext(String s) {
+
+
+
                 Log.e("rxjava_scheduler_" + System.currentTimeMillis(),Thread.currentThread().getName() + "\t" + s);
 
             }
