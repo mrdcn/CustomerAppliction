@@ -32,4 +32,12 @@ public class DragHelper {
                 (int) (headerView.getY() + headerView.getMeasuredHeight()));
         return rect.contains((int) event.getX(), (int) event.getY());
     }
+
+
+    public abstract class Callback{
+        abstract  void onViewPositionChanged(View changedView , int left , int top , int right , int bottom);
+
+        abstract  void onViewReleased();
+    }
+
 }
