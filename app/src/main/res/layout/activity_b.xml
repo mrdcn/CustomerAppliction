@@ -7,14 +7,29 @@
 
     <TextView
         android:id="@+id/bac"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="B"
         android:textColor="#772862"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:textSize="20sp" />
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
+    <com.another.customapplication.view.HorizontalDragView
+        android:id="@+id/drag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@id/drag_header"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#dd22">
+
+        </ScrollView>
+
+    </com.another.customapplication.view.HorizontalDragView>
 
 </RelativeLayout>

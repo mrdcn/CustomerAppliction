@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.another.customapplication.R;
+import com.another.customapplication.view.HorizontalDragView;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -28,6 +29,8 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class BActivity<T> extends MainActivity {
+
+    HorizontalDragView dragView;
     String ssid;
     ArrayList<Disposable> mDisposables = new ArrayList<>();
     @Override
@@ -36,16 +39,17 @@ public class BActivity<T> extends MainActivity {
         discriptor = "-----B";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_b);
-
+        dragView = findViewById(R.id.drag);
 
         findViewById(R.id.bac).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WifiManager manager = (WifiManager) getSystemService(WIFI_SERVICE);
-
-                ssid = manager.getConnectionInfo().getSSID();
-
-                Log.e("bac",ssid);
+//                WifiManager manager = (WifiManager) getSystemService(WIFI_SERVICE);
+//
+//                ssid = manager.getConnectionInfo().getSSID();
+//
+//                Log.e("bac",ssid);
+                dragView.showContnet();
             }
         });
 
