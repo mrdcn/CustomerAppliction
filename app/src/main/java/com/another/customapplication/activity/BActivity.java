@@ -41,6 +41,14 @@ public class BActivity<T> extends MainActivity {
         setContentView(R.layout.activity_b);
         dragView = findViewById(R.id.drag);
 
+        findViewById(R.id.open).setOnClickListener(v -> {
+            dragView.showContnet();
+        });
+
+        findViewById(R.id.close).setOnClickListener(v -> {
+            dragView.hideContent();
+        });
+
         findViewById(R.id.bac).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

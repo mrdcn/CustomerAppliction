@@ -436,13 +436,15 @@ public class DragHelper {
         int dx = finalLeft - startLeft;
         int dy = finalTop - startTop;
 
-        if (dx == 0 || dy == 0) {
+        if (dx == 0 && dy == 0) {
             mScroller.abortAnimation();
             return false;
         }
 
         final int duration = computeSettleDuration(mCapturedView, dx, dy, xvel, yvel);
         mScroller.startScroll(startLeft, startTop, dx, dy, duration);
+
+        setDragState(STATE_SETTLING);
         return true;
 
     }

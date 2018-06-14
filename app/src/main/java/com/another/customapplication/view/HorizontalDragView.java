@@ -246,12 +246,24 @@ public class HorizontalDragView extends ViewGroup {
             return;
         if (animate) {
             final LayoutParams lp = (LayoutParams) drawerView.getLayoutParams();
-            mDragHelper.smoothSlideViewTo(drawerView, drawerView.getWidth() , 100);
+            mDragHelper.smoothSlideViewTo(drawerView, 0 , getHeight() - 100 + getTop());
 
         } else {
 //            moveDrawerToOffset(drawerView, 1.f);
 //            updateDrawerState(lp.gravity, STATE_IDLE, drawerView);
             drawerView.setVisibility(VISIBLE);
+        }
+        invalidate();
+    }
+
+    public void closeDrawer(View drawerView , boolean animate){
+        if(drawerView == null)
+            return;
+        if(animate){
+            final LayoutParams lp = (LayoutParams) drawerView.getLayoutParams();
+            mDragHelper.smoothSlideViewTo(drawerView,0,getHeight() +getTop());
+        }else{
+            drawerView.setVisibility(INVISIBLE);
         }
         invalidate();
     }
@@ -265,7 +277,7 @@ public class HorizontalDragView extends ViewGroup {
     }
 
     public void hideContent() {
-
+        closeDrawer(findViewById(R.id.drag_header),true);
     }
 
 

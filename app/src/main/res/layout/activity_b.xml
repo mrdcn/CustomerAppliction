@@ -6,12 +6,34 @@
     tools:context="com.another.customapplication.activity.BActivity">
 
     <TextView
+
         android:id="@+id/bac"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
         android:text="B"
+
         android:textColor="#772862"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bac"
+        android:layout_marginTop="10dp"
+        android:text="open"
+        android:textColor="#FF4081" />
+
+    <TextView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bac"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/open"
+        android:text="close"
+        android:textColor="#FF4081" />
 
     <FrameLayout
         android:layout_width="wrap_content"
