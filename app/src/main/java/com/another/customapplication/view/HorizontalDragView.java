@@ -70,19 +70,26 @@ public class HorizontalDragView extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
+        final boolean interceptForDrag = mDragHelper.shouldInterceptTouchEvent(ev);
+
+
         boolean interceptForTap = false;
+//
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                final float x = ev.getX();
+//                final float y = ev.getY();
+//                mInitialMotionX = x;
+//                mInitialMotionY = y;
+//                final View child = mDragHelper.findTopChildUnder((int)x , (int)y);
+//                if(child != null){
+//                    // 当前header显示， 并且点击在header上 需要拦截
+//                    interceptForTap = true;
+//                }
+//                break;
+//        }
 
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                final float x = ev.getX();
-                final float y = ev.getY();
-                mInitialMotionX = x;
-                mInitialMotionY = y;
-                interceptForTap = mDragHelper.isPointOnView(ev);
-                break;
-        }
-
-        return interceptForTap;
+        return interceptForTap | interceptForDrag;
     }
 
     @Override
@@ -96,7 +103,7 @@ public class HorizontalDragView extends ViewGroup {
 
         mDragHelper.processTouchEvent(event);
 
-        switch (event.getAction()) {
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 touchX = event.getX();
                 touchY = event.getY();
@@ -120,7 +127,8 @@ public class HorizontalDragView extends ViewGroup {
                 break;
         }
 
-        return super.onTouchEvent(event);
+
+        return mDragHelper.isShowDragView();
     }
 
     @Override
@@ -309,7 +317,10 @@ public class HorizontalDragView extends ViewGroup {
 
         @Override
         int clampViewPositionVertical(View view, int top, int dy) {
-            return view.getTop();
+
+            //计算最多滑动距离
+            int height = getHeight();
+            return Math.max(height - view.getHeight(),Math.min(top,height));
         }
 
         @Override
