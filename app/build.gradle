@@ -9,6 +9,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -35,4 +36,5 @@ dependencies {
         exclude  group:'org.openqa.selenium'
     }
     implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:multidex:1.0.3'
 }

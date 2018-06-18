@@ -45,11 +45,27 @@
         android:layout_height="match_parent">
 
         <ScrollView
-            android:id="@id/drag_header"
+            android:id="@id/drager"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:background="#dd22">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <View
+                android:id="@id/drag_header"
+                android:background="#ffff"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+            <View
+                android:background="#f765"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"/>
+
+
+        </LinearLayout>
         </ScrollView>
 
     </com.another.customapplication.view.HorizontalDragView>

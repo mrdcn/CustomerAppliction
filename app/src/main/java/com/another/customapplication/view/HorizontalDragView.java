@@ -55,7 +55,7 @@ public class HorizontalDragView extends ViewGroup {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        dragContentView = (ScrollView) findViewById(R.id.drag_header);
+        dragContentView = (ScrollView) findViewById(R.id.drager);
     }
 
     /**
@@ -75,19 +75,19 @@ public class HorizontalDragView extends ViewGroup {
 
         boolean interceptForTap = false;
 //
-//        switch (ev.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                final float x = ev.getX();
-//                final float y = ev.getY();
-//                mInitialMotionX = x;
-//                mInitialMotionY = y;
-//                final View child = mDragHelper.findTopChildUnder((int)x , (int)y);
-//                if(child != null){
-//                    // 当前header显示， 并且点击在header上 需要拦截
-//                    interceptForTap = true;
-//                }
-//                break;
-//        }
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                final float x = ev.getX();
+                final float y = ev.getY();
+                mInitialMotionX = x;
+                mInitialMotionY = y;
+                final View child = mDragHelper.findTopChildUnder((int)x , (int)y);
+                if(child != null){
+                    // 当前header显示， 并且点击在header上 需要拦截
+                    interceptForTap = true;
+                }
+                break;
+        }
 
         return interceptForTap | interceptForDrag;
     }
@@ -245,7 +245,7 @@ public class HorizontalDragView extends ViewGroup {
     private boolean isHeaderView(View view) {
         if (view == null)
             return false;
-        return view.getId() == R.id.drag_header;
+        return view.getId() == R.id.drager;
     }
 
 
@@ -254,7 +254,7 @@ public class HorizontalDragView extends ViewGroup {
             return;
         if (animate) {
             final LayoutParams lp = (LayoutParams) drawerView.getLayoutParams();
-            mDragHelper.smoothSlideViewTo(drawerView, 0 , getHeight() - 100 + getTop());
+            mDragHelper.smoothSlideViewTo(drawerView, 0 , getHeight() - getHeaderHight(drawerView) + getTop());
 
         } else {
 //            moveDrawerToOffset(drawerView, 1.f);
@@ -262,6 +262,10 @@ public class HorizontalDragView extends ViewGroup {
             drawerView.setVisibility(VISIBLE);
         }
         invalidate();
+    }
+
+    private int getHeaderHight(View drawerView){
+       return drawerView.findViewById(R.id.drag_header).getHeight();
     }
 
     public void closeDrawer(View drawerView , boolean animate){
@@ -277,15 +281,15 @@ public class HorizontalDragView extends ViewGroup {
     }
 
     boolean isDrawerView(View child){
-        return (child.getId() == R.id.drag_header);
+        return (child.getId() == R.id.drager);
     }
 
     public void showContnet() {
-        openDrawer(findViewById(R.id.drag_header),true);
+        openDrawer(findViewById(R.id.drager),true);
     }
 
     public void hideContent() {
-        closeDrawer(findViewById(R.id.drag_header),true);
+        closeDrawer(findViewById(R.id.drager),true);
     }
 
 
@@ -311,9 +315,44 @@ public class HorizontalDragView extends ViewGroup {
         }
 
         @Override
-        void onViewReleased() {
+        void onViewReleased(View releasedChild , float xvel , float yvel) {
             // adjust view position whe released
+            final float offset = getDrawerViewOffset(releasedChild);
+//            final int childWidth = releasedChild.getWidth();
+
+//            int left;
+//            if (checkDrawerViewAbsoluteGravity(releasedChild, Gravity.LEFT)) {
+//                left = xvel > 0 || (xvel == 0 && offset > 0.5f) ? 0 : -childWidth;
+//            } else {
+//                final int width = getWidth();
+//                left = xvel < 0 || (xvel == 0 && offset > 0.5f) ? width - childWidth : width;
+//            }
+
+            int top ;
+            final int height = getHeight();
+            final int childHeight = releasedChild.getHeight();
+            top = yvel < 0 || (yvel == 0 && offset > getHeaderOffset(releasedChild)) ? height - childHeight + getTop(): height + getTop();
+
+            mDragHelper.settleCapturedViewAt(0, top);
+            invalidate();
         }
+
+        private float getHeaderOffset(View drawerView){
+            View header = drawerView.findViewById(R.id.drager);
+            if(header == null)
+                return 0;
+            int height = header.getHeight();
+//            childTop = viewHeight - (int) (childHeight * lp.onScreen);
+
+            int viewHeight = getHeight();
+
+//            getHeight()+getTop()-height = getHeight() - (int)(drawerView.getHeight() * lp.onscreen)
+
+            return (height - getTop()) / viewHeight;
+
+
+        }
+
 
         @Override
         int clampViewPositionVertical(View view, int top, int dy) {

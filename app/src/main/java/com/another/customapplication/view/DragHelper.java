@@ -349,7 +349,36 @@ public class DragHelper {
     }
 
     private void releaseViewForPointerUp() {
-        // TODO: 2018/6/13 release
+        mVelocityTracker.computeCurrentVelocity(1000, mMaxVelocity);
+        final float xvel = clampMag(
+                mVelocityTracker.getXVelocity(mActivePointerId),
+                mMinVelocity, mMaxVelocity);
+        final float yvel = clampMag(
+                mVelocityTracker.getYVelocity(mActivePointerId),
+                mMinVelocity, mMaxVelocity);
+        dispatchViewReleased(xvel, yvel);
+    }
+    private boolean mReleaseInProgress;
+    private void dispatchViewReleased(float xvel , float yvel){
+        mReleaseInProgress = true;
+        mCallback.onViewReleased(mCapturedView, xvel, yvel);
+        mReleaseInProgress = false;
+
+        if (mDragState == STATE_DRAGGING) {
+            // onViewReleased didn't call a method that would have changed this. Go idle.
+            setDragState(STATE_IDLE);
+        }
+    }
+
+    public boolean settleCapturedViewAt(int finalLeft , int finalTop){
+        if (!mReleaseInProgress) {
+            throw new IllegalStateException("Cannot settleCapturedViewAt outside of a call to "
+                    + "Callback#onViewReleased");
+        }
+
+        return forceSettleCapturedViewAt(finalLeft, finalTop,
+                (int) mVelocityTracker.getXVelocity(mActivePointerId),
+                (int) mVelocityTracker.getYVelocity(mActivePointerId));
     }
 
     public void cancel() {
@@ -492,7 +521,7 @@ public class DragHelper {
 
     private int computeSettleDuration(View child, int dx, int dy, int xvel, int yvel) {
 //        xvel = clampMag(xvel, (int) mMinVelocity, (int) mMaxVelocity);
-        yvel = clampMag(yvel, (int) mMinVelocity, (int) mMaxVelocity);
+        yvel = clampMag(yvel, mMinVelocity,  mMaxVelocity);
         final int absDx = Math.abs(dx);
         final int absDy = Math.abs(dy);
         final int absXVel = Math.abs(xvel);
@@ -507,11 +536,11 @@ public class DragHelper {
         return (int) (yduration * yweight);
     }
 
-    private int clampMag(int value, int absMin, int absMax) {
-        final int absValue = Math.abs(value);
+    private int clampMag(float value, float absMin, float absMax) {
+        final float absValue = Math.abs(value);
         if (absValue < absMin) return 0;
-        if (absValue > absMax) return value > 0 ? absMax : -absMax;
-        return value;
+        if (absValue > absMax) return value > 0 ? (int)absMax : (int)-absMax;
+        return (int)value;
     }
 
     private final int MAX_SETTLE_DURATION = 600;
@@ -623,7 +652,7 @@ public class DragHelper {
     public abstract static class Callback {
         abstract void onViewPositionChanged(View changedView, int left, int top, int right, int bottom);
 
-        abstract void onViewReleased();
+        abstract void onViewReleased(View releaseChild , float xval , float yval);
 
         abstract int clampViewPositionVertical(View view, int top, int dy);
 
