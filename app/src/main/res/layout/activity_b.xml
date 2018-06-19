@@ -1,77 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.another.customapplication.view.DrawerLayout
+    android:id="@+id/drag"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.another.customapplication.activity.BActivity">
 
-    <TextView
-
-        android:id="@+id/bac"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="B"
-
-        android:textColor="#772862"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/open"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/bac"
-        android:layout_marginTop="10dp"
-        android:text="open"
-        android:textColor="#FF4081" />
-
-    <TextView
-        android:id="@+id/close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/bac"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@id/open"
-        android:text="close"
-        android:textColor="#FF4081" />
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <com.another.customapplication.view.DrawerLayout
-        android:id="@+id/drag"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        <TextView
 
-        <ScrollView
-            android:id="@id/drager"
+            android:id="@+id/bac"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="B"
+
+            android:textColor="#772862"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bac"
+            android:layout_marginTop="10dp"
+            android:text="open"
+            android:textColor="#FF4081"/>
+
+        <TextView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bac"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/open"
+            android:text="close"
+            android:textColor="#FF4081"/>
+
+    </RelativeLayout>
+
+
+
+    <ScrollView
+        android:id="@id/drager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dd22">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#dd22">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
             <View
                 android:id="@id/drag_header"
-                android:background="#ffff"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="200dp"
+                android:background="#ffff"/>
+
             <View
-                android:background="#f765"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"/>
+                android:layout_height="400dp"
+                android:background="#f765"/>
 
 
         </LinearLayout>
-        </ScrollView>
+    </ScrollView>
 
-    </com.another.customapplication.view.DrawerLayout>
 
-</RelativeLayout>
+</com.another.customapplication.view.DrawerLayout>

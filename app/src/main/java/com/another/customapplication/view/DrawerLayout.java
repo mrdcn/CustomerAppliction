@@ -1361,7 +1361,7 @@ public class DrawerLayout extends ViewGroup {
             }
         }
 
-        return true;
+        return wantTouchEvents;
     }
 
     @Override
