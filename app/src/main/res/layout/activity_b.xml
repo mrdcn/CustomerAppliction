@@ -39,10 +39,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <com.another.customapplication.view.HorizontalDragView
+    <com.another.customapplication.view.DrawerLayout
         android:id="@+id/drag"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <ScrollView
             android:id="@id/drager"
@@ -68,6 +72,6 @@
         </LinearLayout>
         </ScrollView>
 
-    </com.another.customapplication.view.HorizontalDragView>
+    </com.another.customapplication.view.DrawerLayout>
 
 </RelativeLayout>

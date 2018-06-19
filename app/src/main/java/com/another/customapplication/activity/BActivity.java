@@ -1,14 +1,11 @@
 package com.another.customapplication.activity;
 
-import android.content.Context;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Trace;
 import android.util.Log;
 import android.view.View;
 
 import com.another.customapplication.R;
-import com.another.customapplication.view.HorizontalDragView;
+import com.another.customapplication.view.DrawerLayout;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -30,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BActivity<T> extends MainActivity {
 
-    HorizontalDragView dragView;
+    DrawerLayout dragView;
     String ssid;
     ArrayList<Disposable> mDisposables = new ArrayList<>();
     @Override
